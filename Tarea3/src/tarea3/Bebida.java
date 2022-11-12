@@ -1,17 +1,22 @@
 package tarea3;
-
-import java.awt.Graphics;
-
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 public abstract class Bebida {
     private int numSerie;
-    public Bebida(int numSerie){   
+    private JLabel bebida;
+    public Bebida(int numSerie, JPanel Panel, int x, int y){   
         this.numSerie = numSerie;
+        bebida = new JLabel();
+        bebida.setBounds(x, y, 40, 100);
     }
     public int getSerie(){
         return numSerie;
     }
-    public abstract String beber(); 
-    public abstract void paint(Graphics g);
-    public abstract int getx();
-    public abstract int gety(); 
+    public JLabel getJlabel(){
+        return bebida;
+    }
+    public void setJlabel(JLabel bebida){
+        this.bebida = bebida;
+    }
+    public abstract String beber();
 }

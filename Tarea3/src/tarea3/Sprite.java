@@ -1,39 +1,16 @@
 package tarea3;
-
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Polygon;
-
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 public class Sprite extends Bebida{
-    private int  x;
-    private int y;
-    public Sprite(int numSerie){
-        super(numSerie);
-        x = 225;
-        y = 200;
+    public Sprite(int numSerie, JPanel Panel, int x, int y){
+        super(numSerie, Panel, x, y);
+        ImageIcon imagen = new ImageIcon("Sprite.png");
+        super.getJlabel().setIcon(new ImageIcon(imagen.getImage().getScaledInstance(super.getJlabel().getWidth(),super.getJlabel().getHeight(),Image.SCALE_SMOOTH)));
+        Panel.add(super.getJlabel());
     }
     @Override
     public String beber(){
         return "Sprite";
-    }
-      @Override
-    public void paint (Graphics g){
-        Polygon p = new Polygon();
-        p.addPoint(this.x,this.y);
-        p.addPoint(x+40, y);
-        p.addPoint(x+40, y+80);
-        p.addPoint(x, y+80);
-        
-        g.setColor(Color.green);
-        g.fillPolygon(p);
-        if(p!=null)g.drawPolygon(p);
-     }
-    @Override
-    public int getx(){
-        return x;
-    }
-    @Override
-    public int gety(){
-        return y;
     }
 }

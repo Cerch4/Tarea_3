@@ -5,10 +5,6 @@
 package tarea3;
 import java.awt.*;
 import javax.swing.JPanel;
-/**
- *
- * @author Cesar
- */
 public class Panel_intento extends JPanel {
     private Expendedor t;
   

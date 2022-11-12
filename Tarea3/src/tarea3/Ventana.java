@@ -2,13 +2,12 @@ package tarea3; //Ventana Segun lo Visto en Clases
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import java.awt.Rectangle;
 
 public class Ventana extends JFrame{
 
     public Ventana(){
          super();
-         this.setTitle("esta Ventana");
+         this.setTitle("Maquina Expendedora");
          this.setLayout(new BorderLayout());;
          this.add(new JButton("norte"),BorderLayout.NORTH);
          this.add(new JButton("este"),BorderLayout.EAST);
