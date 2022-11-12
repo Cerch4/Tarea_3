@@ -1,4 +1,9 @@
 package tarea3;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Polygon;
+
 public class Expendedor {
     private depositoMoneda DVuelto = new depositoMoneda();
     private int precio;
@@ -10,8 +15,8 @@ public class Expendedor {
     private int  x;
     private int y;
     public Expendedor(){
-        x = 300;
-        y = 200;
+        this.x=50;
+        this.y=50;
         this.precio = 800;
         int nbebidas = 30;
         for (int i = 0; i < nbebidas; i++) {
@@ -59,7 +64,7 @@ public class Expendedor {
                 break;
             case 3: 
                 depositoEsp = fanta.getBebida();
-                if (out == null) {
+                if (depositoEsp == null) {
                     throw new NoHayBebidaException("Actualmente no hay mas Fanta, lo sentimos");
                 }
                 Despecial.addMoneda(m);
@@ -92,6 +97,37 @@ public class Expendedor {
         depositoEsp = null;
         return aux;
     }
+    
+    public void paint(Graphics g){
+        Polygon p = new Polygon();
+        
+        p.addPoint(x,y);
+        p.addPoint(x+400, y);
+        p.addPoint(x+400, y+500);
+        p.addPoint(x, y+500);
+        
+        g.setColor(Color.red);
+        g.fillPolygon(p);
+        
+        
+        Polygon q = new Polygon();
+        
+        q.addPoint(x+50,y+350);
+        q.addPoint(x+350, y+350);
+        q.addPoint(x+350, y+450);
+        q.addPoint(x+50, y+450);
+        
+        g.setColor(Color.gray);
+        g.fillPolygon(q);
+        
+        
+        sprite.paint(g);
+        fanta.paint(g);
+        cocacola.paint(g);
+        if(p!=null)g.drawPolygon(p);
+      
+        if(q!=null)g.drawPolygon(q);
+     }
     
     
 }

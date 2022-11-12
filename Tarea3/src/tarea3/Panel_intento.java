@@ -10,15 +10,16 @@ import javax.swing.JPanel;
  * @author Cesar
  */
 public class Panel_intento extends JPanel {
-    private DrawExpendedor t;
+    private Expendedor t;
+  
     public Panel_intento(){
         this.setBackground(Color.white);
-        t = new DrawExpendedor();
+        t = new Expendedor();
+     
     }
     
     public void paint(Graphics g){
         super.paint(g);
         if(t!=null)t.paint(g);
-        
     }
 }

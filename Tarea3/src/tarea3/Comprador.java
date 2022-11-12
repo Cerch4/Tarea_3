@@ -4,15 +4,24 @@
  */
 package tarea3;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Polygon;
+
 /**
  *
  * @author Cesar
  */
+
 public class Comprador {
     private int vuelto = 0;
     private String flavor;
+    private int  x;
+    private int y;
     public Comprador(Moneda money, int sabor, Expendedor exp) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException{
-        Bebida Bebida = exp.comprarBebida(money, sabor);
+        x = 300;
+        y = 300;
+        exp.comprarBebida(money, sabor);
         while(true){
             Moneda m = exp.getVuelto();
             if (m == null) {
@@ -20,7 +29,7 @@ public class Comprador {
             }
             vuelto = vuelto + m.getValor();
         }
-        flavor = Bebida.beber();
+        flavor = exp.getBebida().beber();
     }
     public int cuantoVuelto(){
         return(vuelto);
@@ -29,4 +38,17 @@ public class Comprador {
     public String queBebiste(){
         return(flavor);
     }
+    
+    public void paint(Graphics g){
+        Polygon p = new Polygon();
+        
+        p.addPoint(x,y);
+        p.addPoint(x+40, y);
+        p.addPoint(x+40, y+50);
+        p.addPoint(x, y+50);
+        
+        g.setColor(Color.red);
+        g.fillPolygon(p);
+        if(p!=null)g.drawPolygon(p);
+     } 
 }
