@@ -1,11 +1,21 @@
 package tarea3; //Ventana Segun lo Visto en Clases
 import java.awt.BorderLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import java.awt.Rectangle;
+
 public class Ventana extends JFrame{
+
     public Ventana(){
-        this.setLayout(new BorderLayout());
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(1000,800);
-        this.setVisible(true);
-    }
+         super();
+         this.setTitle("esta Ventana");
+         this.setLayout(new BorderLayout());;
+         this.add(new JButton("norte"),BorderLayout.NORTH);
+         this.add(new JButton("este"),BorderLayout.EAST);
+         this.add(new JButton("oeste"),BorderLayout.WEST);
+         this.add(new Panel_intento( ),BorderLayout.CENTER);
+         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+         this.setSize(980,720);
+         this.setVisible(true); 
+    } 
 }
