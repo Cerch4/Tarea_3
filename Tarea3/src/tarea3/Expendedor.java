@@ -1,4 +1,5 @@
 package tarea3;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -30,8 +31,9 @@ public class Expendedor extends JPanel{
     }    
     @Override
     public void paint(Graphics g){
-        ImageIcon imagen = new ImageIcon(getClass().getResource("MaquinaExpendedoraPrototipo2.png"));
-        g.drawImage(imagen.getImage(), x, y, 12*escala/8, 20*escala/8, this);
+        //ImageIcon imagen = new ImageIcon(getClass().getResource("MaquinaExpendedoraPrototipo2.png"));
+        //g.drawImage(imagen.getImage(), x, y, 12*escala/8, 20*escala/8, this);
+        paintexpendedor(g);
         for (int i = 0; i < 5; i++) {
             Bebida b;
             b = cocacola.getBebidain(i);
@@ -104,5 +106,29 @@ public class Expendedor extends JPanel{
     }
     public int getPrice(){
         return precio;
+    }
+    
+    public void paintexpendedor(Graphics g){
+        g.setColor(Color.DARK_GRAY);
+        g.fillRoundRect(x,y,12*escala/8, 20*escala/8,40,40);
+        
+        g.setColor(Color.black);
+        g.fillRoundRect(x+15, y+20, 12*escala/8-65, 20*escala/8-250,60,60);
+        
+        g.setColor(Color.red);
+        g.fillRoundRect(x, y+250,12*escala/8, 20*escala/8-250,40,40);
+        
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRoundRect(x+40, y+325,12*escala/8-80, 20*escala/8-360,35,35);
+        g.fillRoundRect(x+180, y+265,12*escala/8-205, 20*escala/8-365,65,65);
+        
+        g.setColor(Color.black);
+        g.drawRoundRect(x+39, y+324,12*escala/8-79, 20*escala/8-359,35,35);
+        g.fillRect(x+50, y+356,x+120, 3);
+        
+        g.drawRoundRect(x+179, y+264,12*escala/8-204, 20*escala/8-364,65,65);
+        g.fillRect(x+187, y+290,x, 2);
+        
+        
     }
 }
