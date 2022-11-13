@@ -1,15 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tarea3;
-
-/**
- *
- * @author Cesar
- */
-public abstract class Moneda {
+import javax.swing.JPanel;
+public abstract class Moneda extends JPanel{
+    private int x;
+    private int y;
+    private int escala;
     public Moneda(){   
+        x = 0;
+        y = 0;
+        escala = 0;
     }
     public String getSerie(){
         int pos = 0;
@@ -21,5 +19,13 @@ public abstract class Moneda {
         }
         return(this.toString().substring(pos));
     }
+    public void ChangeLocationScale(int x,int y, int escala){
+        this.x = x;
+        this.y = y;
+        this.escala = escala;
+    }
+    public int getx(){return x;}
+    public int gety(){return y;}
+    public int getescala(){return escala;}
     public abstract int getValor();
 }

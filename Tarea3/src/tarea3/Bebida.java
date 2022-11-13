@@ -1,22 +1,25 @@
 package tarea3;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-public abstract class Bebida {
+public abstract class Bebida extends JPanel{
     private int numSerie;
-    private JLabel bebida;
-    public Bebida(int numSerie, JPanel Panel, int x, int y){   
+    private int x;
+    private int y;
+    private int escala;
+    public Bebida(int numSerie, int x, int y, int escala){   
         this.numSerie = numSerie;
-        bebida = new JLabel();
-        bebida.setBounds(x, y, 40, 100);
+        this.x = x;
+        this.y = y;
+        this.escala = escala;
     }
     public int getSerie(){
         return numSerie;
     }
-    public JLabel getJlabel(){
-        return bebida;
+    public void changeLocation(int x,int y){
+        this.x = x;
+        this.y = y;
     }
-    public void setJlabel(JLabel bebida){
-        this.bebida = bebida;
-    }
+    public int getx(){return x;}
+    public int gety(){return y;}
+    public int getescala(){return escala;}
     public abstract String beber();
 }

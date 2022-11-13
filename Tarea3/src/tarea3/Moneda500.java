@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tarea3;
-
-/**
- *
- * @author Cesar
- */
+import java.awt.Graphics;
+import javax.swing.ImageIcon;
 class Moneda500 extends Moneda {
     public Moneda500(){
         super();
@@ -15,5 +8,9 @@ class Moneda500 extends Moneda {
     @Override
     public int getValor() {
         return(500);
+    }
+    public void paint(Graphics g){
+        ImageIcon imagen = new ImageIcon(getClass().getResource("Moneda100.png"));
+        g.drawImage(imagen.getImage(), getx(), gety(), 3*getescala()/16, getescala()/4, this);
     }
 }

@@ -1,7 +1,4 @@
 package tarea3;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Polygon;
 import java.util.ArrayList;
 public class DepositoBebida {
     private ArrayList<Bebida> al;
@@ -16,6 +13,13 @@ public class DepositoBebida {
             return null;
         }else{
             return al.remove(0);
+        }
+    }
+    public Bebida getBebidain(int n){
+        if (n>=al.size()) {
+            return new NoBebida(0,0,0,0);
+        }else{
+            return al.get(n);
         }
     }
     public int getStorage(){

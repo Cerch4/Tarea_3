@@ -1,22 +1,50 @@
 package tarea3;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-public class Expendedor {
+public class Expendedor extends JPanel{
     private depositoMoneda DVuelto = new depositoMoneda();
     private int precio;
     private DepositoBebida cocacola = new DepositoBebida();
     private DepositoBebida sprite = new DepositoBebida();
     private DepositoBebida fanta = new DepositoBebida();
-    public Expendedor(int nbebidas, int precio, JPanel Panel, int x, int y){
+    int x;
+    int y;
+    int escala;
+    public Expendedor(int nbebidas, int precio, int x, int y, int escala){
+        super();
+        this.x = x;
+        this.y = y;
+        this.escala = escala;
+        setBounds(0, 0, 4*escala, 3*escala);
         this.precio = precio;
         for (int i = 0; i < nbebidas; i++) {
-            CocaCola auxC = new CocaCola (i, Panel, x, y);
+            CocaCola auxC = new CocaCola (i, 0, 0, escala);
             cocacola.addBebida(auxC);
-            Sprite auxS = new Sprite (nbebidas+i, Panel, x, y);
+            Sprite auxS = new Sprite (nbebidas+i, 0, 0, escala);
             sprite.addBebida(auxS);
-            Fanta auxF = new Fanta ((nbebidas*2)+i, Panel, x, y);
+            Fanta auxF = new Fanta ((nbebidas*2)+i, 0, 0, escala);
             fanta.addBebida(auxF);
         }
     }    
+    @Override
+    public void paint(Graphics g){
+        ImageIcon imagen = new ImageIcon(getClass().getResource("MaquinaExpendedoraPrototipo2.png"));
+        g.drawImage(imagen.getImage(), x, y, 12*escala/8, 20*escala/8, this);
+        for (int i = 0; i < 5; i++) {
+            Bebida b;
+            b = cocacola.getBebidain(i);
+            b.changeLocation(x + 3*escala/16 + (i*(10+(escala/8))), y + 3*escala/16);
+            b.paint(g);
+            b = sprite.getBebidain(i);
+            b.changeLocation(x + 3*escala/16 + (i*(10+(escala/8))), y + (3*escala/16) + escala/4);
+            b.paint(g);
+            b = fanta.getBebidain(i);
+            b.changeLocation(x + 3*escala/16 + (i*(10+(escala/8))), y + (3*escala/16) + escala/2);
+            b.paint(g);
+        }
+    }
     public Bebida comprarBebida(Moneda m, int n) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException{
         int money = m.getValor();
         if (m == null) {

@@ -1,20 +1,21 @@
 package tarea3; //Ventana Segun lo Visto en Clases
-import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Ventana extends JFrame{
-
+    PanelPrincipal PP;
     public Ventana(){
-         super();
-         this.setTitle("Maquina Expendedora");
-         this.setLayout(new BorderLayout());;
-         this.add(new JButton("norte"),BorderLayout.NORTH);
-         this.add(new JButton("este"),BorderLayout.EAST);
-         this.add(new JButton("oeste"),BorderLayout.WEST);
-         this.add(new Panel_intento( ),BorderLayout.CENTER);
-         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-         this.setSize(980,720);
-         this.setVisible(true); 
+        super();
+        int escala = 160; // debe ser divisible por 8 
+        PP = new PanelPrincipal(escala);
+        setSize(4*escala, 3*escala); //tamaño fijo de 4:3
+        setTitle("Maquina Expendedora");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(null);
+        this.setResizable(false);
+        add(PP);
+        setVisible(true); 
     } 
 }

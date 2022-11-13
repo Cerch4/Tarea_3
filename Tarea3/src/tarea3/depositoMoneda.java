@@ -11,26 +11,26 @@ import java.util.ArrayList;
  * @author Cesar
  */
 public class depositoMoneda {
-   private ArrayList<Moneda> varl;
+    private ArrayList<Moneda> varl;
 
-   public depositoMoneda(){
-        varl = new ArrayList<Moneda>();
+    public depositoMoneda(){
+         varl = new ArrayList<Moneda>();
+     }
+    public void addMoneda(Moneda mon){
+        varl.add(mon);
     }
-   public void addMoneda(Moneda mon){
-       varl.add(mon);
-   }
-   public Moneda getMoneda(){
-       if(varl.isEmpty()){
-           return null;
-       }
-       else{
-           Moneda aux = null;
-           aux = varl.remove(0);  
-           return(aux);
-       }
-   }
-   public int check(){
-       return(varl.size());
-   }
+    public Moneda getMoneda(){
+        if(varl.isEmpty()){
+            return null;
+        }
+        else{
+            Moneda aux = null;
+            aux = varl.remove(0);  
+            return(aux);
+        }
+    }
+    public int check(){
+        return(varl.size());
+    }
 }
 
