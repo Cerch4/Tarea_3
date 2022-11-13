@@ -35,13 +35,13 @@ public class Expendedor extends JPanel{
         for (int i = 0; i < 5; i++) {
             Bebida b;
             b = cocacola.getBebidain(i);
-            b.changeLocation(x + 3*escala/16 + (i*(10+(escala/8))), y + 3*escala/16);
+            b.changeLocation(x + 3*escala/16 + (i*(3*escala/16)), y + 3*escala/16);
             b.paint(g);
             b = sprite.getBebidain(i);
-            b.changeLocation(x + 3*escala/16 + (i*(10+(escala/8))), y + (3*escala/16) + escala/4);
+            b.changeLocation(x + 3*escala/16 + (i*(3*escala/16)), y + (3*escala/16) + escala/4);
             b.paint(g);
             b = fanta.getBebidain(i);
-            b.changeLocation(x + 3*escala/16 + (i*(10+(escala/8))), y + (3*escala/16) + escala/2);
+            b.changeLocation(x + 3*escala/16 + (i*(3*escala/16)), y + (3*escala/16) + escala/2);
             b.paint(g);
         }
     }

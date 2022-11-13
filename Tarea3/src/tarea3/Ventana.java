@@ -7,7 +7,7 @@ public class Ventana extends JFrame{
     PanelPrincipal PP;
     public Ventana(){
         super();
-        int escala = 160; // debe ser divisible por 8 
+        int escala = 320; // debe ser divisible por 8 
         PP = new PanelPrincipal(escala);
         setSize(4*escala, 3*escala); //tamaño fijo de 4:3
         setTitle("Maquina Expendedora");
