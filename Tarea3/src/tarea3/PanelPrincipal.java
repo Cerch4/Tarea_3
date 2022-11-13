@@ -21,4 +21,10 @@ public class PanelPrincipal extends JPanel{
         com.paint(g);
         exp.paint(g);
     }
+    public Expendedor getexp(){
+        return exp;
+    }
+    public Comprador getcom(){
+        return com;
+    }
 }
