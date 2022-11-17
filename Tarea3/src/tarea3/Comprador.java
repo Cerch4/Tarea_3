@@ -9,14 +9,17 @@ public class Comprador extends JPanel{
     private Bebida bebida;
     private String flavor;
     private int escala;
+
     public Comprador(Expendedor exp, int escala){
         vuelto = new depositoMoneda();
         bebida = null;
         this.escala = escala;
         this.exp = exp;
+
     }
-    public void comprarBebida(Moneda money, int sabor) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException{
-        this.bebida = exp.comprarBebida(sabor);
+    
+    public void comprarBebida(int sabor) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException{
+        exp.comprarBebida(sabor);
     }
     public void getVuelto(){
         while(true){
@@ -31,21 +34,30 @@ public class Comprador extends JPanel{
             valorvuelto = valorvuelto + m.getValor();
             vuelto.addMoneda(m);
         }
+        
     }
+    
     public int cuantoVuelto(){
         return(valorvuelto);
     }
     public Bebida getBebida(){
         return bebida;
     }
+    public void recojeBebida(){
+        bebida = exp.getBebida();
+        
+        
+    }
     public String queBebiste(){
         return(flavor);
     }
+
     @Override
     public void paint(Graphics g){
         g.setColor(Color.LIGHT_GRAY);
         g.fillRoundRect(27*escala/8, escala/4, 3*escala/8, escala/2, 3*escala/16, 3*escala/16);
         g.fillRoundRect(3*escala, 7*escala/8, 3*escala/4, 3*escala/2, 3*escala/16, 3*escala/16);
+       
         if(vuelto.check()!=0){
             Moneda m = new Moneda100();
             m.ChangeLocationScale(25*escala/8, escala, escala);

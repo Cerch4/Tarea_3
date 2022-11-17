@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class Ventana extends JFrame{
     PanelPrincipal PP;
-    JButton JBPanelN1,JBPanelN2,JBPanelN3,JBPanelN0, moneda100, moneda500, moneda1000, getvuelto, getbebida;
+    JButton JbTexto,JBPanelN1,JBPanelN2,JBPanelN3,JBPanelN0, moneda100, moneda500, moneda1000, getvuelto, getbebida;
     int escala, numpad = 0;
     Moneda m;
     Expendedor exp;
@@ -36,6 +36,8 @@ public class Ventana extends JFrame{
     } 
     public void crearGUI(){
         ImageIcon imagen = new ImageIcon(getClass().getResource("BotonNuevoC.png"));
+        JbTexto = new JButton("Bebidas Udec");
+        JbTexto.setBounds(3*escala/8, 17*escala/8, escala, escala/4);
         JBPanelN1 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(3*escala/16, escala/16, Image.SCALE_SMOOTH)));JBPanelN1.setBounds(11*escala/8, 5*escala/8, 3*escala/16, escala/16);
         imagen = new ImageIcon(getClass().getResource("BotonNuevoS.png"));
         JBPanelN2 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(3*escala/16, escala/16, Image.SCALE_SMOOTH)));JBPanelN2.setBounds(11*escala/8, 11*escala/16, 3*escala/16, escala/16);
@@ -63,13 +65,18 @@ public class Ventana extends JFrame{
         evento_moneda(moneda100);evento_moneda(moneda500);evento_moneda(moneda1000);evento_takeBebida(getbebida);
         add(JBPanelN1);add(JBPanelN2);add(JBPanelN3);add(JBPanelN0);add(moneda100);add(moneda500);add(moneda1000);
         add(getbebida);
+        add(JbTexto);
     }
     public void evento_takeBebida(JButton act){
         act.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                com.getBebida().changeLocation(27*escala/8, escala/4);
-                add(com.getBebida().getJButton());
+                if (act.getBounds().x == 3*escala/8){
+                    com.recojeBebida();
+                    com.getVuelto();
+                    repaint();
+                }
+               
             }
         });
     }
@@ -107,7 +114,7 @@ public class Ventana extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if (act.getBounds().y == 13*escala/16) {
                     try {
-                        com.comprarBebida(m, numpad);
+                        com.comprarBebida( numpad);
                     } catch (NoHayBebidaException ex) { // revisar
                         JOptionPane.showMessageDialog(null, ex.getMessage());
                     } catch (PagoIncorrectoException ex) {
