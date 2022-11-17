@@ -16,8 +16,7 @@ public class Comprador extends JPanel{
         this.exp = exp;
     }
     public void comprarBebida(Moneda money, int sabor) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException{
-        this.bebida = exp.comprarBebida(money, sabor);
-        repaint();
+        this.bebida = exp.comprarBebida(sabor);
     }
     public void getVuelto(){
         while(true){
@@ -36,6 +35,9 @@ public class Comprador extends JPanel{
     public int cuantoVuelto(){
         return(valorvuelto);
     }
+    public Bebida getBebida(){
+        return bebida;
+    }
     public String queBebiste(){
         return(flavor);
     }
@@ -48,9 +50,10 @@ public class Comprador extends JPanel{
             Moneda m = new Moneda100();
             m.ChangeLocationScale(25*escala/8, escala, escala);
             m.paint(g);
-        }
+        }/*
         if (bebida!=null) {
+            bebida.changeLocation(27*escala/8, escala/4);
             bebida.paint(g);
-        }
+        }*/
     }
 }

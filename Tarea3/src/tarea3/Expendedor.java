@@ -5,16 +5,24 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 public class Expendedor extends JPanel{
-    private depositoMoneda DVuelto = new depositoMoneda();
+    private depositoMoneda DVuelto;
+    private depositoMoneda DIngreso;
+    private int money;
     private int precio;
-    private DepositoBebida cocacola = new DepositoBebida();
-    private DepositoBebida sprite = new DepositoBebida();
-    private DepositoBebida fanta = new DepositoBebida();
+    private DepositoBebida cocacola;
+    private DepositoBebida sprite;
+    private DepositoBebida fanta;
     int x;
     int y;
     int escala;
     public Expendedor(int nbebidas, int precio, int x, int y, int escala){
         super();
+        money = 0;
+        DVuelto = new depositoMoneda();
+        DIngreso = new depositoMoneda();
+        cocacola = new DepositoBebida();
+        sprite = new DepositoBebida();
+        fanta = new DepositoBebida();
         this.x = x;
         this.y = y;
         this.escala = escala;
@@ -31,8 +39,6 @@ public class Expendedor extends JPanel{
     }    
     @Override
     public void paint(Graphics g){
-        //ImageIcon imagen = new ImageIcon(getClass().getResource("MaquinaExpendedoraPrototipo2.png"));
-        //g.drawImage(imagen.getImage(), x, y, 12*escala/8, 20*escala/8, this);
         paintexpendedor(g);
         for (int i = 0; i < 5; i++) {
             Bebida b;
@@ -47,13 +53,23 @@ public class Expendedor extends JPanel{
             b.paint(g);
         }
     }
-    public Bebida comprarBebida(Moneda m, int n) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException{
-        int money = m.getValor();
-        if (m == null) {
-            throw new PagoIncorrectoException("Pago no valido");
-        }
-        if (m.getValor()<precio) {
+    public Bebida comprarBebida(int n) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException{
+        if (money<precio) {
             throw new PagoInsuficienteException("El Monto de Pago no es suficiente para realizar la transaccion");
+        }
+        money = money-precio;
+        while(money > precio){
+            if (money-1000>=precio) {
+                DVuelto.addMoneda(new Moneda1000());
+            }else{
+                if (money-500>=precio) {
+                    DVuelto.addMoneda(new Moneda500());
+                }else{
+                    if (money-100>=precio) {
+                        DVuelto.addMoneda(new Moneda100());
+                    }
+                }
+            }
         }
         Bebida out = null;
         switch(n){
@@ -107,28 +123,36 @@ public class Expendedor extends JPanel{
     public int getPrice(){
         return precio;
     }
-    
+    public void IngresaMoneda(Moneda m) throws PagoIncorrectoException{        
+        if (m == null) {
+            throw new PagoIncorrectoException("Pago no valido");
+        }
+        DIngreso.addMoneda(m);
+        money = 0;
+        for (int i = 0; i < DIngreso.check(); i++) {
+            money = money + DIngreso.getMonedain(i).getValor(); 
+        }
+    }
     public void paintexpendedor(Graphics g){
         g.setColor(Color.DARK_GRAY);
-        g.fillRoundRect(x,y,12*escala/8, 20*escala/8,40,40);
-        
-        g.setColor(Color.black);
-        g.fillRoundRect(x+15, y+20, 12*escala/8-65, 20*escala/8-250,60,60);
+        g.fillRoundRect(escala/8,escala/8,12*escala/8, 20*escala/8,40,40);        
         
         g.setColor(Color.red);
-        g.fillRoundRect(x, y+250,12*escala/8, 20*escala/8-250,40,40);
-        
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillRoundRect(x+40, y+325,12*escala/8-80, 20*escala/8-360,35,35);
-        g.fillRoundRect(x+180, y+265,12*escala/8-205, 20*escala/8-365,65,65);
+        g.fillRoundRect(escala/8, 27*escala/16, 12*escala/8, 15*escala/16,40,40);
         
         g.setColor(Color.black);
-        g.drawRoundRect(x+39, y+324,12*escala/8-79, 20*escala/8-359,35,35);
-        g.fillRect(x+50, y+356,x+120, 3);
+        g.fillRoundRect(7*escala/32, 2*escala/8, 35*escala/32, 5*escala/4,60,60);
         
-        g.drawRoundRect(x+179, y+264,12*escala/8-204, 20*escala/8-364,65,65);
-        g.fillRect(x+187, y+290,x, 2);
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRoundRect(3*escala/8, 17*escala/8, escala, escala/4,35,35);
+        g.fillRoundRect(5*escala/4, 7*escala/4, 3*escala/16, 3*escala/16,20,20);
         
+        g.setColor(Color.black);
+        g.drawRoundRect(3*escala/8, 17*escala/8, escala, escala/4,35,35);
+        g.fillRect(7*escala/16, 37*escala/16, 7*escala/8, escala/80);
+        
+        g.drawRoundRect(5*escala/4, 7*escala/4, 3*escala/16, 3*escala/16,20,20);
+        g.fillRect(21*escala/16, (15*escala/8)+((15*escala/8-7*escala/4)/4), escala/16, escala/80);
         
     }
 }

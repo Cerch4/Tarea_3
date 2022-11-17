@@ -1,6 +1,8 @@
 package tarea3;
 import java.awt.Graphics;
+import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 public class Fanta extends Bebida{
     public Fanta(int numSerie, int x, int y, int escala){
         super(numSerie, x, y, escala);
@@ -11,7 +13,11 @@ public class Fanta extends Bebida{
     }
     @Override
     public void paint(Graphics g){
+        JButton jb;
         ImageIcon imagen = new ImageIcon(getClass().getResource("Fanta.png"));
         g.drawImage(imagen.getImage(), getx(), gety(), 3*getescala()/16, getescala()/4, this);
+        jb = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(getescala()/4, getescala()/4, Image.SCALE_SMOOTH)));
+        jb.setBounds(getx(),  gety(), 3*getescala()/16, getescala()/4);
+        setJButton(jb);
     }
 }

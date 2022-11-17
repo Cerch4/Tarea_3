@@ -29,6 +29,13 @@ public class depositoMoneda {
             return(aux);
         }
     }
+    public Moneda getMonedain(int n){
+        if (n>=varl.size()) {
+            return null;
+        }else{
+            return varl.get(n);
+        }
+    }
     public int check(){
         return(varl.size());
     }
