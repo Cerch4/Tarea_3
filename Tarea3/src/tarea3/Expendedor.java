@@ -10,6 +10,7 @@ public class Expendedor extends JPanel{
     private depositoMoneda DVuelto;
     private depositoMoneda DIngreso;
     private int money;
+    private int moneyVuelto;
     private int precio;
     private DepositoBebida cocacola;
     private DepositoBebida sprite;
@@ -31,6 +32,7 @@ public class Expendedor extends JPanel{
         countm500 = 0;
         countm1000 = 0;
         money = 0;
+        moneyVuelto = 0;
         DVuelto = new depositoMoneda();
         DIngreso = new depositoMoneda();
         cocacola = new DepositoBebida();
@@ -74,6 +76,7 @@ public class Expendedor extends JPanel{
         if (money<precio) {
             throw new PagoInsuficienteException("El Monto de Pago no es suficiente para realizar la transaccion");
         }
+        moneyVuelto = money-precio;
         money = money-precio;
         while(money > precio){
             if (money-1000>=precio) {
@@ -92,7 +95,7 @@ public class Expendedor extends JPanel{
         switch(n){
             case 1: 
                 bebidaComprada = cocacola.getBebida();
-                if (bebidaComprada== null ) {
+                if (bebidaComprada == null ) {
                     throw new NoHayBebidaException("Actualmente no hay mas Cocacola, lo sentimos");
                 }
                 money = money - precio;
@@ -100,6 +103,7 @@ public class Expendedor extends JPanel{
                     DVuelto.addMoneda(new Moneda100());
                     money = money - 100;
                 }
+
                 break;
             case 2: 
                 bebidaComprada = sprite.getBebida();
@@ -111,6 +115,7 @@ public class Expendedor extends JPanel{
                     DVuelto.addMoneda(new Moneda100());
                     money = money - 100;
                 }
+
                 break;
             case 3: 
                 bebidaComprada = fanta.getBebida();
@@ -122,6 +127,7 @@ public class Expendedor extends JPanel{
                     DVuelto.addMoneda(new Moneda100());
                     money = money - 100;
                 }
+
                 break;
             default:
                 if (n!=1&&n!=2&&n!=3) {
@@ -144,6 +150,7 @@ public class Expendedor extends JPanel{
          Bebida aux = bebidaComprada;
         bebidaComprada = new NoBebida(999, 555, 65, escala);
         System.out.printf("FUNCIONA \n");
+
         return aux;   
         }
         
@@ -191,6 +198,9 @@ public class Expendedor extends JPanel{
         g.drawString( "X"+Integer.toString(countm100), 27*escala/8, 10*escala/8);
         g.drawString( "X"+Integer.toString(countm500), 27*escala/8, 13*escala/8);
         g.drawString( "X"+Integer.toString(countm1000), 27*escala/8, 16*escala/8);
+        
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g.drawString( "Vuelto:"+Integer.toString(moneyVuelto), 25*escala/8, 18*escala/8);
         
         
         

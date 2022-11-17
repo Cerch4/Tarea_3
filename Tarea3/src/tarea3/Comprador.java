@@ -9,18 +9,22 @@ public class Comprador extends JPanel{
     private Bebida bebida;
     private String flavor;
     private int escala;
+    private int queSabor;
 
     public Comprador(Expendedor exp, int escala){
         vuelto = new depositoMoneda();
         bebida = null;
         this.escala = escala;
         this.exp = exp;
+        queSabor = 0;
 
     }
     
-    public void comprarBebida(int sabor) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException{
-        exp.comprarBebida(sabor);
+    public void comprarBebida(int Sabor) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException{
+        exp.comprarBebida(Sabor);
     }
+    
+   
     public void getVuelto(){
         while(true){
             Moneda m = exp.getVuelto();
