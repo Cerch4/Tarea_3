@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class Ventana extends JFrame{
     PanelPrincipal PP;
-    JButton JbTexto,JBPanelN1,JBPanelN2,JBPanelN3,JBPanelN0, moneda100, moneda500, moneda1000, getvuelto, getbebida;
+    JButton JBPanelN1,JBPanelN2,JBPanelN3,JBPanelN0, moneda100, moneda500, moneda1000, getvuelto, getbebida, moneda100_2, moneda500_2, moneda1000_2, drinkBebida;
     int escala, numpad = 0;
     Moneda m;
     Expendedor exp;
@@ -36,8 +36,6 @@ public class Ventana extends JFrame{
     } 
     public void crearGUI(){
         ImageIcon imagen = new ImageIcon(getClass().getResource("BotonNuevoC.png"));
-        JbTexto = new JButton("Bebidas Udec");
-        JbTexto.setBounds(3*escala/8, 17*escala/8, escala, escala/4);
         JBPanelN1 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(3*escala/16, escala/16, Image.SCALE_SMOOTH)));JBPanelN1.setBounds(11*escala/8, 5*escala/8, 3*escala/16, escala/16);
         imagen = new ImageIcon(getClass().getResource("BotonNuevoS.png"));
         JBPanelN2 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(3*escala/16, escala/16, Image.SCALE_SMOOTH)));JBPanelN2.setBounds(11*escala/8, 11*escala/16, 3*escala/16, escala/16);
@@ -48,39 +46,80 @@ public class Ventana extends JFrame{
         imagen = new ImageIcon(getClass().getResource("Moneda100.png"));
         moneda100 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda100.setBounds(2*escala,  escala/4, escala/4, escala/4);
         moneda100.setBorderPainted(false);
-        moneda100.setContentAreaFilled(false);
+        moneda100.setContentAreaFilled(false);        
+        moneda100_2 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda100_2.setBounds(49*escala/16, 17*escala/16, escala/4, escala/4);
+        moneda100_2.setBorderPainted(false);
+        moneda100_2.setContentAreaFilled(false);// agregar parar monedas guardades en cliente
         imagen = new ImageIcon(getClass().getResource("Moneda500.png"));
         moneda500 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda500.setBounds(9*escala/4,  escala/4, escala/4, escala/4);
         moneda500.setBorderPainted(false);
         moneda500.setContentAreaFilled(false);
+        moneda500_2 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda500_2.setBounds(49*escala/16, 23*escala/16, escala/4, escala/4);
+        moneda500_2.setBorderPainted(false);
+        moneda500_2.setContentAreaFilled(false);
         imagen = new ImageIcon(getClass().getResource("Moneda1000.png"));
         moneda1000 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda1000.setBounds(5*escala/2,  escala/4, escala/4, escala/4);
         moneda1000.setBorderPainted(false);
         moneda1000.setContentAreaFilled(false);
+        moneda1000_2 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda1000_2.setBounds(49*escala/16, 29*escala/16, escala/4, escala/4);
+        moneda1000_2.setBorderPainted(false);
+        moneda1000_2.setContentAreaFilled(false);
         getvuelto = new JButton();getvuelto.setBounds(5*escala/4, 7*escala/4, 3*escala/16, 3*escala/16);
         getbebida = new JButton();getbebida.setBounds(3*escala/8, 17*escala/8, escala, escala/4);
         getbebida.setBorderPainted(false);
         getbebida.setContentAreaFilled(false);
+        getbebida.setToolTipText("Click para extraer Bebida en Maquina");
+        getvuelto= new JButton();getvuelto.setBounds(5*escala/4, 7*escala/4, 3*escala/16, 3*escala/16); 
+        getvuelto.setBorderPainted(false);
+        getvuelto.setContentAreaFilled(false);
+        getvuelto.setToolTipText("Click para extraer Vuelto en Maquina");
+        drinkBebida= new JButton();drinkBebida.setBounds(111*escala/32, 3*escala/8, 3*escala/16, escala/4);
+        drinkBebida.setBorderPainted(false);
+        drinkBebida.setContentAreaFilled(false);
+        drinkBebida.setToolTipText("Beber Bebida");
         evento_numpad(JBPanelN1);evento_numpad(JBPanelN2);evento_numpad(JBPanelN3);evento_numpad(JBPanelN0);
         evento_moneda(moneda100);evento_moneda(moneda500);evento_moneda(moneda1000);evento_takeBebida(getbebida);
+        evento_takeVuelto(getvuelto);evento_drinkBebida(drinkBebida);
         add(JBPanelN1);add(JBPanelN2);add(JBPanelN3);add(JBPanelN0);add(moneda100);add(moneda500);add(moneda1000);
-        add(getbebida);
-        add(JbTexto);
+        add(getbebida);add(getvuelto);add(moneda100_2);add(moneda500_2);add(moneda1000_2);add(drinkBebida);
+    }
+    public void evento_drinkBebida(JButton act){
+        act.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (com.BebidaInCom()) {
+                    JOptionPane.showMessageDialog(null, "Bebiste una " + com.queBebiste());
+                }else{
+                    JOptionPane.showMessageDialog(null, "Aun no se a recogido una Bebida");
+                }
+            }
+        });
+    }
+    public void evento_takeVuelto(JButton act){ // explota al sacar por segunda vez
+        act.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                com.getVuelto();
+                repaint();
+            }
+        });
     }
     public void evento_takeBebida(JButton act){
         act.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) { // evitar que saque bebida si ya hay una 
                 if (act.getBounds().x == 3*escala/8){
-                    com.recojeBebida();
-                    com.getVuelto();
+                    try {
+                        com.recojeBebida();
+                    } catch (NoHayBebidaException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                    }
                     repaint();
                 }
-               
             }
         });
     }
-    public void evento_moneda(JButton act){
+    public void evento_moneda(JButton act){ 
         act.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,6 +144,7 @@ public class Ventana extends JFrame{
                         }
                     }
                 }
+                repaint();
             }
         });
     }
@@ -114,12 +154,15 @@ public class Ventana extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if (act.getBounds().y == 13*escala/16) {
                     try {
-                        com.comprarBebida( numpad);
+                        com.comprarBebida(numpad);
+                        numpad = 0;
                     } catch (NoHayBebidaException ex) { // revisar
                         JOptionPane.showMessageDialog(null, ex.getMessage());
                     } catch (PagoIncorrectoException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage());
                     } catch (PagoInsuficienteException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                    } catch (YaComproException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage());
                     }
                     repaint();
