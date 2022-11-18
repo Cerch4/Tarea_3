@@ -9,21 +9,47 @@ public class Comprador extends JPanel{
     private Bebida bebida, Bcomparacion;
     private String flavor;
     private int escala;
-    private int queSabor;
 
     public Comprador(Expendedor exp, int escala){
         vuelto = new depositoMoneda();
         bebida = new NoBebida(0,0,0,0);Bcomparacion = new NoBebida(0,0,0,0);
         this.escala = escala;
         this.exp = exp;
-        queSabor = 0;
     }
-    
+    public Moneda getMonedabyValor(Moneda m) throws NohayMonedaException{
+        if (m.getValor() == 1000) {
+            if (exp.getcountm1000()==0) {
+                throw new NohayMonedaException("No Posee monedas de 1000");
+            }else{
+                exp.setcountm1000(exp.getcountm1000()-1);
+            }
+        }else{
+            if (m.getValor() == 500) {
+                if (exp.getcountm500()==0) {
+                    throw new NohayMonedaException("No Posee monedas de 500");
+                }else{
+                    exp.setcountm500(exp.getcountm500()-1);
+                }
+            }else{
+                if (m.getValor()==100) {
+                    if (exp.getcountm100()==0) {
+                        throw new NohayMonedaException("No Posee monedas de 100");
+                    }else{
+                        exp.setcountm100(exp.getcountm100()-1);
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < vuelto.check(); i++) {
+            if (vuelto.getMonedain(i).getClass().getName().equals(m.getClass().getName())) {
+                return vuelto.takeMonedain(i);
+            }
+        }
+        throw new NohayMonedaException("No encontro monedas");
+    }
     public void comprarBebida(int Sabor) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException, YaComproException{
         exp.comprarBebida(Sabor);
     }
-    
-   
     public void getVuelto(){
         while(true){
             Moneda m = exp.getVuelto();
@@ -37,7 +63,6 @@ public class Comprador extends JPanel{
             valorvuelto = valorvuelto + m.getValor();
             vuelto.addMoneda(m);
         }
-        
     }
     public int cuantoVuelto(){
         return(valorvuelto);
@@ -54,7 +79,7 @@ public class Comprador extends JPanel{
         return(flavor);
     }
     public boolean BebidaInCom(){
-        if (bebida.getClass().getName() != Bcomparacion.getClass().getName()) {
+        if (!bebida.getClass().getName().equals(Bcomparacion.getClass().getName())) {
             return true;
         }else{
             return false;
@@ -65,12 +90,6 @@ public class Comprador extends JPanel{
         g.setColor(Color.LIGHT_GRAY);
         g.fillRoundRect(27*escala/8, escala/4, 3*escala/8, escala/2, 3*escala/16, 3*escala/16);
         g.fillRoundRect(3*escala, 7*escala/8, 3*escala/4, 3*escala/2, 3*escala/16, 3*escala/16);
-       
-        if(vuelto.check()!=0){
-            Moneda m = new Moneda100();
-            m.ChangeLocationScale(25*escala/8, escala, escala);
-            m.paint(g);
-        }
         if (bebida.getClass().getName() != Bcomparacion.getClass().getName()) {
             bebida.changeLocation(111*escala/32, 3*escala/8);
             bebida.paint(g);

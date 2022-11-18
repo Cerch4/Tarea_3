@@ -29,6 +29,16 @@ public class depositoMoneda {
             return(aux);
         }
     }
+    public Moneda takeMonedain(int n){        
+        if(varl.isEmpty()){
+            return null;
+        }
+        else{
+            Moneda aux = null;
+            aux = varl.remove(n);  
+            return(aux);
+        }
+    }
     public Moneda getMonedain(int n){
         if (n>=varl.size()) {
             return null;

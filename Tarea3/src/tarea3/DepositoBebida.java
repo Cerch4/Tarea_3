@@ -10,7 +10,7 @@ public class DepositoBebida {
     }
     public Bebida getBebida(){
         if (al.size()==0) {
-            return null;
+            return new NoBebida(-1,0,0,0);
         }else{
             return al.remove(0);
         }

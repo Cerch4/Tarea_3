@@ -11,19 +11,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Ventana extends JFrame{
-    PanelPrincipal PP;
-    JButton JBPanelN1,JBPanelN2,JBPanelN3,JBPanelN0, moneda100, moneda500, moneda1000, getvuelto, getbebida, moneda100_2, moneda500_2, moneda1000_2, drinkBebida;
-    int escala, numpad = 0;
-    Moneda m;
-    Expendedor exp;
-    Comprador com;
+    private PanelPrincipal PP;
+    private JButton JBPanelN1,JBPanelN2,JBPanelN3,JBPanelN0, moneda100, moneda500, moneda1000, getvuelto, getbebida, moneda100_2, moneda500_2, moneda1000_2, drinkBebida;
+    private int escala, numpad = 0;
+    private Expendedor exp;
+    private Comprador com;
     public Ventana(){
         super(); // 32x24 x/8*escala y/8*escala
         escala = 160; 
         PP = new PanelPrincipal(escala);
         exp = PP.getexp();
         com = PP.getcom();
-        m = null;
         setSize(4*escala, 3*escala); //tamaño fijo de 4:3
         setTitle("Maquina Expendedora");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -49,7 +47,7 @@ public class Ventana extends JFrame{
         moneda100.setContentAreaFilled(false);        
         moneda100_2 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda100_2.setBounds(49*escala/16, 17*escala/16, escala/4, escala/4);
         moneda100_2.setBorderPainted(false);
-        moneda100_2.setContentAreaFilled(false);// agregar parar monedas guardades en cliente
+        moneda100_2.setContentAreaFilled(false);
         imagen = new ImageIcon(getClass().getResource("Moneda500.png"));
         moneda500 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda500.setBounds(9*escala/4,  escala/4, escala/4, escala/4);
         moneda500.setBorderPainted(false);
@@ -79,9 +77,44 @@ public class Ventana extends JFrame{
         drinkBebida.setToolTipText("Beber Bebida");
         evento_numpad(JBPanelN1);evento_numpad(JBPanelN2);evento_numpad(JBPanelN3);evento_numpad(JBPanelN0);
         evento_moneda(moneda100);evento_moneda(moneda500);evento_moneda(moneda1000);evento_takeBebida(getbebida);
-        evento_takeVuelto(getvuelto);evento_drinkBebida(drinkBebida);
+        evento_takeVuelto(getvuelto);evento_drinkBebida(drinkBebida);evento_moneda_2(moneda100_2);evento_moneda_2(moneda500_2);evento_moneda_2(moneda1000_2);
         add(JBPanelN1);add(JBPanelN2);add(JBPanelN3);add(JBPanelN0);add(moneda100);add(moneda500);add(moneda1000);
         add(getbebida);add(getvuelto);add(moneda100_2);add(moneda500_2);add(moneda1000_2);add(drinkBebida);
+    }
+    public void evento_moneda_2(JButton act){
+        act.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (act.getBounds().y == 17*escala/16) {
+                    try {
+                        exp.IngresaMoneda(com.getMonedabyValor(new Moneda100()));
+                    } catch (PagoIncorrectoException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                    } catch (NohayMonedaException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                    }
+                }else{
+                    if(act.getBounds().y == 23*escala/16){
+                        try {
+                            exp.IngresaMoneda(com.getMonedabyValor(new Moneda500()));
+                        } catch (PagoIncorrectoException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                        } catch (NohayMonedaException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                        }
+                    }else{
+                        try {
+                            exp.IngresaMoneda(com.getMonedabyValor(new Moneda1000()));
+                        } catch (PagoIncorrectoException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                        } catch (NohayMonedaException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                        }
+                    }
+                }
+                repaint();
+            }
+        });
     }
     public void evento_drinkBebida(JButton act){
         act.addActionListener(new ActionListener() {
@@ -95,7 +128,7 @@ public class Ventana extends JFrame{
             }
         });
     }
-    public void evento_takeVuelto(JButton act){ // explota al sacar por segunda vez
+    public void evento_takeVuelto(JButton act){ 
         act.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -107,8 +140,8 @@ public class Ventana extends JFrame{
     public void evento_takeBebida(JButton act){
         act.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { // evitar que saque bebida si ya hay una 
-                if (act.getBounds().x == 3*escala/8){
+            public void actionPerformed(ActionEvent e) {
+                if (act.getBounds().x == 3*escala/8&&!com.BebidaInCom()){
                     try {
                         com.recojeBebida();
                     } catch (NoHayBebidaException ex) {
@@ -156,7 +189,7 @@ public class Ventana extends JFrame{
                     try {
                         com.comprarBebida(numpad);
                         numpad = 0;
-                    } catch (NoHayBebidaException ex) { // revisar
+                    } catch (NoHayBebidaException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage());
                     } catch (PagoIncorrectoException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage());

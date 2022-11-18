@@ -2,8 +2,6 @@ package tarea3;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 public class Expendedor extends JPanel{
@@ -63,32 +61,37 @@ public class Expendedor extends JPanel{
             b.paint(g);
         }
     }
+    public int getcountm100(){return countm100;}
+    public int getcountm500(){return countm500;}
+    public int getcountm1000(){return countm1000;}
+    public void setcountm100(int c){countm100 = c;}
+    public void setcountm500(int c){countm500 = c;}
+    public void setcountm1000(int c){countm1000 = c;}
     public void comprarBebida(int n) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException, YaComproException{
         if (money<precio) {
             throw new PagoInsuficienteException("El Monto de Pago no es suficiente para realizar la transaccion");
         }
-        System.out.println(bebidaComprada.getClass().getName());
         if(bebidaComprada.getClass().getName() != Bcomparacion.getClass().getName()){
              throw new YaComproException("Ya hay una bebida almacenada, Extraigala para proceder con otra compra");
         }
         switch(n){
             case 1: 
                 bebidaComprada = cocacola.getBebida();
-                if (bebidaComprada == null ) {
+                if (bebidaComprada.getClass().getName() == Bcomparacion.getClass().getName()) {
                     throw new NoHayBebidaException("Actualmente no hay mas Cocacola, lo sentimos");
                 }
                 money = money - precio;
                 break;
             case 2: 
                 bebidaComprada = sprite.getBebida();
-                if (bebidaComprada == null) {
+                if (bebidaComprada.getClass().getName() == Bcomparacion.getClass().getName()) {
                     throw new NoHayBebidaException("Actualmente no hay mas Sprite, lo sentimos");
                 }
                 money = money - precio;
                 break;
             case 3: 
                 bebidaComprada = fanta.getBebida();
-                if (bebidaComprada == null) {
+                if (bebidaComprada.getClass().getName() == Bcomparacion.getClass().getName()) {
                     throw new NoHayBebidaException("Actualmente no hay mas Fanta, lo sentimos");
                 }
                 money = money - precio;
@@ -172,7 +175,7 @@ public class Expendedor extends JPanel{
         g.fillRoundRect(escala/8, 27*escala/16, 12*escala/8, 15*escala/16,40,40);
         
         g.setColor(Color.black);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 3*escala/16)); 
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 2*escala/16)); 
         
         g.fillRoundRect(7*escala/32, 2*escala/8, 35*escala/32, 5*escala/4,60,60);
         g.drawString( "X" + Integer.toString(countm100), 27*escala/8, 10*escala/8);
