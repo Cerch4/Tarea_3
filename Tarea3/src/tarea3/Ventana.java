@@ -2,13 +2,10 @@ package tarea3; //Ventana Segun lo Visto en Clases
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 public class Ventana extends JFrame{
     private PanelPrincipal PP;
@@ -17,8 +14,8 @@ public class Ventana extends JFrame{
     private Expendedor exp;
     private Comprador com;
     public Ventana(){
-        super(); // 32x24 x/8*escala y/8*escala
-        escala = 160; 
+        super(); 
+        escala = 160; //con 160 es 640x480 con 240 es 960x720 con 320 es 1280x960
         PP = new PanelPrincipal(escala);
         exp = PP.getexp();
         com = PP.getcom();
@@ -48,6 +45,7 @@ public class Ventana extends JFrame{
         moneda100_2 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda100_2.setBounds(49*escala/16, 17*escala/16, escala/4, escala/4);
         moneda100_2.setBorderPainted(false);
         moneda100_2.setContentAreaFilled(false);
+        moneda100_2.setToolTipText("Actualmente no hay monedas de 100");
         imagen = new ImageIcon(getClass().getResource("Moneda500.png"));
         moneda500 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda500.setBounds(9*escala/4,  escala/4, escala/4, escala/4);
         moneda500.setBorderPainted(false);
@@ -55,6 +53,7 @@ public class Ventana extends JFrame{
         moneda500_2 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda500_2.setBounds(49*escala/16, 23*escala/16, escala/4, escala/4);
         moneda500_2.setBorderPainted(false);
         moneda500_2.setContentAreaFilled(false);
+        moneda500_2.setToolTipText("Actualmente no hay monedas de 500");
         imagen = new ImageIcon(getClass().getResource("Moneda1000.png"));
         moneda1000 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda1000.setBounds(5*escala/2,  escala/4, escala/4, escala/4);
         moneda1000.setBorderPainted(false);
@@ -62,6 +61,7 @@ public class Ventana extends JFrame{
         moneda1000_2 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda1000_2.setBounds(49*escala/16, 29*escala/16, escala/4, escala/4);
         moneda1000_2.setBorderPainted(false);
         moneda1000_2.setContentAreaFilled(false);
+        moneda1000_2.setToolTipText("Actualmente no hay monedas de 1000");
         getvuelto = new JButton();getvuelto.setBounds(5*escala/4, 7*escala/4, 3*escala/16, 3*escala/16);
         getbebida = new JButton();getbebida.setBounds(3*escala/8, 17*escala/8, escala, escala/4);
         getbebida.setBorderPainted(false);
@@ -74,7 +74,7 @@ public class Ventana extends JFrame{
         drinkBebida= new JButton();drinkBebida.setBounds(111*escala/32, 3*escala/8, 3*escala/16, escala/4);
         drinkBebida.setBorderPainted(false);
         drinkBebida.setContentAreaFilled(false);
-        drinkBebida.setToolTipText("Beber Bebida");
+        drinkBebida.setToolTipText("Espacio de Bebida del Cliente");
         evento_numpad(JBPanelN1);evento_numpad(JBPanelN2);evento_numpad(JBPanelN3);evento_numpad(JBPanelN0);
         evento_moneda(moneda100);evento_moneda(moneda500);evento_moneda(moneda1000);evento_takeBebida(getbebida);
         evento_takeVuelto(getvuelto);evento_drinkBebida(drinkBebida);evento_moneda_2(moneda100_2);evento_moneda_2(moneda500_2);evento_moneda_2(moneda1000_2);
@@ -112,6 +112,24 @@ public class Ventana extends JFrame{
                         }
                     }
                 }
+                if (com.getcountm100()>0) {
+                    moneda100_2.setToolTipText("El numero de serie de la primera moneda encontrada es " + com.getMonedaby(new Moneda100()).getSerie());
+                }
+                if (com.getcountm100()==0) {
+                    moneda100_2.setToolTipText("Actualmente no hay monedas de 100");
+                }
+                if (com.getcountm500()>0) {
+                    moneda500_2.setToolTipText("El numero de serie de la primera moneda encontrada es " + com.getMonedaby(new Moneda500()).getSerie());
+                }
+                if (com.getcountm500()==0) {
+                    moneda500_2.setToolTipText("Actualmente no hay monedas de 500");
+                }
+                if (com.getcountm1000()>0) {
+                    moneda1000_2.setToolTipText("El numero de serie de la primera moneda encontrada es " + com.getMonedaby(new Moneda1000()).getSerie());
+                }
+                if (com.getcountm1000()==0) {
+                    moneda1000_2.setToolTipText("Actualmente no hay monedas de 1000");
+                }
                 repaint();
             }
         });
@@ -122,6 +140,7 @@ public class Ventana extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if (com.BebidaInCom()) {
                     JOptionPane.showMessageDialog(null, "Bebiste una " + com.queBebiste());
+                    drinkBebida.setToolTipText("Espacio de Bebida del Cliente");
                 }else{
                     JOptionPane.showMessageDialog(null, "Aun no se a recogido una Bebida");
                 }
@@ -133,6 +152,15 @@ public class Ventana extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 com.getVuelto();
+                if (com.getcountm100()>0) {
+                    moneda100_2.setToolTipText("El numero de serie de la primera moneda encontrada es " + com.getMonedaby(new Moneda100()).getSerie());
+                }
+                if (com.getcountm500()>0) {
+                    moneda500_2.setToolTipText("El numero de serie de la primera moneda encontrada es " + com.getMonedaby(new Moneda500()).getSerie());
+                }
+                if (com.getcountm1000()>0) {
+                    moneda1000_2.setToolTipText("El numero de serie de la primera moneda encontrada es " + com.getMonedaby(new Moneda1000()).getSerie());
+                }
                 repaint();
             }
         });
@@ -147,6 +175,7 @@ public class Ventana extends JFrame{
                     } catch (NoHayBebidaException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage());
                     }
+                    drinkBebida.setToolTipText("Beber Bebida con numero de serie: " + com.getBebida().getSerie());
                     repaint();
                 }
             }

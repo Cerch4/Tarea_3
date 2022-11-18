@@ -10,14 +10,7 @@ public abstract class Moneda extends JPanel{
         escala = 0;
     }
     public String getSerie(){
-        int pos = 0;
-        for (int i = this.toString().length()-1; i >= 0; i--) {
-            if (this.toString().charAt(i)=='@') {
-                pos = i;
-                break;
-            }
-        }
-        return(this.toString().substring(pos));
+        return(Integer.toHexString(this.hashCode()));
     }
     public void ChangeLocationScale(int x,int y, int escala){
         this.x = x;

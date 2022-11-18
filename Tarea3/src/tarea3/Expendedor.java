@@ -14,8 +14,7 @@ public class Expendedor extends JPanel{
     private DepositoBebida sprite;
     private DepositoBebida fanta;
     private Bebida bebidaComprada, Bcomparacion;
-    private int x, y, escala;
-    private JLabel dineros;
+    private int escala;
     private int countm100, countm500, countm1000;
     public Expendedor(int nbebidas, int precio, int x, int y, int escala){
         super();
@@ -27,8 +26,6 @@ public class Expendedor extends JPanel{
         cocacola = new DepositoBebida(x,y,escala);
         sprite = new DepositoBebida(x,y + 4*escala/12,escala);
         fanta = new DepositoBebida(x,y + 4*escala/6,escala);
-        this.x = x;
-        this.y = y;
         this.escala = escala;
         setBounds(0, 0, 4*escala, 3*escala);
         this.precio = precio;
@@ -170,9 +167,6 @@ public class Expendedor extends JPanel{
         g.setFont(new Font("TimesRoman", Font.PLAIN, 2*escala/16)); 
         
         g.fillRoundRect(7*escala/32, 2*escala/8, 35*escala/32, 5*escala/4,60,60);
-        g.drawString( "X" + Integer.toString(countm100), 27*escala/8, 10*escala/8);
-        g.drawString( "X" + Integer.toString(countm500), 27*escala/8, 13*escala/8);
-        g.drawString( "X" + Integer.toString(countm1000), 27*escala/8, 16*escala/8);
    
         g.setColor(Color.LIGHT_GRAY);
         g.fillRoundRect(3*escala/8, 17*escala/8, escala, escala/4,35,35);

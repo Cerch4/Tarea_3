@@ -1,5 +1,6 @@
 package tarea3;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 public class Comprador extends JPanel{
@@ -9,8 +10,10 @@ public class Comprador extends JPanel{
     private Bebida bebida, Bcomparacion;
     private String flavor;
     private int escala;
+    private int countm100, countm500, countm1000;
 
     public Comprador(Expendedor exp, int escala){
+        countm100 = 0;countm500 = 0;countm1000 = 0;
         vuelto = new depositoMoneda();
         bebida = new NoBebida(0,0,0,0);Bcomparacion = new NoBebida(0,0,0,0);
         this.escala = escala;
@@ -18,24 +21,24 @@ public class Comprador extends JPanel{
     }
     public Moneda getMonedabyValor(Moneda m) throws NohayMonedaException{
         if (m.getValor() == 1000) {
-            if (exp.getcountm1000()==0) {
+            if (countm1000==0) {
                 throw new NohayMonedaException("No Posee monedas de 1000");
             }else{
-                exp.setcountm1000(exp.getcountm1000()-1);
+                countm1000 = countm1000-1;
             }
         }else{
             if (m.getValor() == 500) {
-                if (exp.getcountm500()==0) {
+                if (countm500==0) {
                     throw new NohayMonedaException("No Posee monedas de 500");
                 }else{
-                    exp.setcountm500(exp.getcountm500()-1);
+                    countm500 = countm500-1;
                 }
             }else{
                 if (m.getValor()==100) {
-                    if (exp.getcountm100()==0) {
+                    if (countm100==0) {
                         throw new NohayMonedaException("No Posee monedas de 100");
                     }else{
-                        exp.setcountm100(exp.getcountm100()-1);
+                        countm100 = countm100-1;
                     }
                 }
             }
@@ -50,6 +53,17 @@ public class Comprador extends JPanel{
     public void comprarBebida(int Sabor) throws NoHayBebidaException, PagoIncorrectoException, PagoInsuficienteException, YaComproException{
         exp.comprarBebida(Sabor);
     }
+    public int getcountm100(){return countm100;}
+    public int getcountm500(){return countm500;}
+    public int getcountm1000(){return countm1000;}
+    public Moneda getMonedaby(Moneda m){
+        for (int i = 0; i < vuelto.check(); i++) {
+            if (vuelto.getMonedain(i).getClass().getName().equals(m.getClass().getName())) {
+                return vuelto.getMonedain(i);
+            }
+        }
+        return m;
+    }
     public void getVuelto(){
         while(true){
             Moneda m = exp.getVuelto();
@@ -63,6 +77,12 @@ public class Comprador extends JPanel{
             valorvuelto = valorvuelto + m.getValor();
             vuelto.addMoneda(m);
         }
+        countm100 = countm100 + exp.getcountm100();
+        exp.setcountm100(0);
+        countm500 = countm500 + exp.getcountm500();
+        exp.setcountm500(0);
+        countm1000 = countm1000 + exp.getcountm1000();
+        exp.setcountm1000(0);
     }
     public int cuantoVuelto(){
         return(valorvuelto);
@@ -94,5 +114,10 @@ public class Comprador extends JPanel{
             bebida.changeLocation(111*escala/32, 3*escala/8);
             bebida.paint(g);
         }
+        g.setColor(Color.black);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 2*escala/16));
+        g.drawString( "X" + Integer.toString(countm100), 27*escala/8, 10*escala/8);
+        g.drawString( "X" + Integer.toString(countm500), 27*escala/8, 13*escala/8);
+        g.drawString( "X" + Integer.toString(countm1000), 27*escala/8, 16*escala/8);
     }
 }
