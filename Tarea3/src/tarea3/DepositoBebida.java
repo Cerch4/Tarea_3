@@ -1,9 +1,17 @@
 package tarea3;
+import java.awt.Graphics;
 import java.util.ArrayList;
-public class DepositoBebida {
+import javax.swing.JPanel;
+public class DepositoBebida extends JPanel{
     private ArrayList<Bebida> al;
-    public DepositoBebida(){
+    int x;
+    int y;
+    int escala;
+    public DepositoBebida(int posx, int posy, int tescale){
         al = new ArrayList<Bebida>();
+        x = posx;
+        y = posy;
+        escala = tescale;
     }
     public void addBebida(Bebida B){
         al.add(B);
@@ -24,5 +32,15 @@ public class DepositoBebida {
     }
     public int getStorage(){
         return al.size();
+    }
+    
+    @Override
+    public void paint(Graphics g){
+        for (int i = 0; i < 5; i++) {
+            Bebida b;
+            b = this.getBebidain(i);
+            b.changeLocation(x + 3*escala/16 + (i*(3*escala/16)), y + 3*escala/16);
+            b.paint(g);
+        }
     }
 }

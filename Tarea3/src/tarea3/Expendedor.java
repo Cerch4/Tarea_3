@@ -24,9 +24,9 @@ public class Expendedor extends JPanel{
         bebidaComprada = new NoBebida(0,0,0,0);Bcomparacion = new NoBebida(0,0,0,0);
         DVuelto = new depositoMoneda();
         DIngreso = new depositoMoneda();
-        cocacola = new DepositoBebida();
-        sprite = new DepositoBebida();
-        fanta = new DepositoBebida();
+        cocacola = new DepositoBebida(x,y,escala);
+        sprite = new DepositoBebida(x,y + 4*escala/12,escala);
+        fanta = new DepositoBebida(x,y + 4*escala/6,escala);
         this.x = x;
         this.y = y;
         this.escala = escala;
@@ -48,18 +48,10 @@ public class Expendedor extends JPanel{
             bebidaComprada.changeLocation(25*escala/32, 17*escala/8);
             bebidaComprada.paint(g);
         }
-        for (int i = 0; i < 5; i++) {
-            Bebida b;
-            b = cocacola.getBebidain(i);
-            b.changeLocation(x + 3*escala/16 + (i*(3*escala/16)), y + 3*escala/16);
-            b.paint(g);
-            b = sprite.getBebidain(i);
-            b.changeLocation(x + 3*escala/16 + (i*(3*escala/16)), y + (3*escala/16) + escala/4);
-            b.paint(g);
-            b = fanta.getBebidain(i);
-            b.changeLocation(x + 3*escala/16 + (i*(3*escala/16)), y + (3*escala/16) + escala/2);
-            b.paint(g);
-        }
+        cocacola.paint(g);
+        sprite.paint(g);
+        fanta.paint(g);
+        
     }
     public int getcountm100(){return countm100;}
     public int getcountm500(){return countm500;}
