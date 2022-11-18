@@ -15,9 +15,11 @@ public class Expendedor extends JPanel{
     private DepositoBebida fanta;
     private Bebida bebidaComprada, Bcomparacion;
     private int escala;
+    private int countserie;
     private int countm100, countm500, countm1000;
     public Expendedor(int nbebidas, int precio, int x, int y, int escala){
         super();
+        countserie=nbebidas*3;
         calcVuelto = false;
         countm100 = 0;countm500 = 0;countm1000 = 0;money = 0;
         bebidaComprada = new NoBebida(0,0,0,0);Bcomparacion = new NoBebida(0,0,0,0);
@@ -49,6 +51,29 @@ public class Expendedor extends JPanel{
         sprite.paint(g);
         fanta.paint(g);
         
+    }
+    public void refill(int n){
+        if (n == 1) {
+            for (int i = countserie; i < countserie+10; i++) {
+                CocaCola auxC = new CocaCola (i, 0, 0, escala);
+                cocacola.addBebida(auxC);
+            }
+            countserie = countserie + 10;
+        }
+        if (n == 2){
+            for (int i = countserie; i < countserie+10; i++) {
+                Sprite auxS = new Sprite (countserie, 0, 0, escala);
+                sprite.addBebida(auxS);
+            }
+            countserie = countserie + 10;
+        }
+        if (n == 3){
+            for (int i = countserie; i < countserie+10; i++) {
+                Fanta auxF = new Fanta (countserie, 0, 0, escala);
+                fanta.addBebida(auxF);
+            }
+            countserie = countserie + 10;
+        }
     }
     public int getcountm100(){return countm100;}
     public int getcountm500(){return countm500;}
@@ -152,10 +177,6 @@ public class Expendedor extends JPanel{
     }
    
     public void paintexpendedor(Graphics g){
-        
-        Moneda100 aux1 = new Moneda100();
-        Moneda500 aux2 = new Moneda500();
-        Moneda1000 aux3 = new Moneda1000();
         
         g.setColor(Color.DARK_GRAY);
         g.fillRoundRect(escala/8,escala/8,12*escala/8, 20*escala/8,40,40);        

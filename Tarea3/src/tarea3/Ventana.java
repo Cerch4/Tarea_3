@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 public class Ventana extends JFrame{
     private PanelPrincipal PP;
-    private JButton JBPanelN1,JBPanelN2,JBPanelN3,JBPanelN0, moneda100, moneda500, moneda1000, getvuelto, getbebida, moneda100_2, moneda500_2, moneda1000_2, drinkBebida;
+    private JButton JBPanelN1,JBPanelN2,JBPanelN3,JBPanelN0, moneda100, moneda500, moneda1000, getvuelto, getbebida, moneda100_2, moneda500_2, moneda1000_2, drinkBebida, refill1,refill2,refill3;
     private int escala, numpad = 0;
     private Expendedor exp;
     private Comprador com;
@@ -38,6 +38,12 @@ public class Ventana extends JFrame{
         JBPanelN3 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(3*escala/16, escala/16, Image.SCALE_SMOOTH)));JBPanelN3.setBounds(11*escala/8, 6*escala/8, 3*escala/16, escala/16);
         imagen = new ImageIcon(getClass().getResource("BotonNuevoE.png"));
         JBPanelN0 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(3*escala/16, escala/16, Image.SCALE_SMOOTH)));JBPanelN0.setBounds(11*escala/8, 13*escala/16, 3*escala/16, escala/16);
+        imagen = new ImageIcon(getClass().getResource("RefillC.png"));
+        refill1 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(3*escala/16, escala/16, Image.SCALE_SMOOTH)));refill1.setBounds(11*escala/8, 15*escala/16, 3*escala/16, escala/16);
+        imagen = new ImageIcon(getClass().getResource("RefillS.png"));
+        refill2 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(3*escala/16, escala/16, Image.SCALE_SMOOTH)));refill2.setBounds(11*escala/8, escala, 3*escala/16, escala/16);
+        imagen = new ImageIcon(getClass().getResource("RefillF.png"));
+        refill3 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(3*escala/16, escala/16, Image.SCALE_SMOOTH)));refill3.setBounds(11*escala/8, 17*escala/16, 3*escala/16, escala/16);
         imagen = new ImageIcon(getClass().getResource("Moneda100.png"));
         moneda100 = new JButton(new ImageIcon(imagen.getImage().getScaledInstance(escala/4, escala/4, Image.SCALE_SMOOTH)));moneda100.setBounds(2*escala,  escala/4, escala/4, escala/4);
         moneda100.setBorderPainted(false);
@@ -78,8 +84,29 @@ public class Ventana extends JFrame{
         evento_numpad(JBPanelN1);evento_numpad(JBPanelN2);evento_numpad(JBPanelN3);evento_numpad(JBPanelN0);
         evento_moneda(moneda100);evento_moneda(moneda500);evento_moneda(moneda1000);evento_takeBebida(getbebida);
         evento_takeVuelto(getvuelto);evento_drinkBebida(drinkBebida);evento_moneda_2(moneda100_2);evento_moneda_2(moneda500_2);evento_moneda_2(moneda1000_2);
+        evento_refill(refill1);evento_refill(refill2);evento_refill(refill3);
         add(JBPanelN1);add(JBPanelN2);add(JBPanelN3);add(JBPanelN0);add(moneda100);add(moneda500);add(moneda1000);
         add(getbebida);add(getvuelto);add(moneda100_2);add(moneda500_2);add(moneda1000_2);add(drinkBebida);
+        add(refill1);add(refill2);add(refill3);
+    }
+    public void evento_refill(JButton act){
+        act.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (act.getBounds().y==15*escala/16) {
+                    exp.refill(1);
+                }else{
+                    if (act.getBounds().y==escala) {
+                        exp.refill(2);
+                    }else{
+                        if (act.getBounds().y==17*escala/16) {
+                            exp.refill(3);
+                        }
+                    }
+                }
+                repaint();
+            }
+        });
     }
     public void evento_moneda_2(JButton act){
         act.addActionListener(new ActionListener() {
